@@ -45,4 +45,14 @@ class Schedule extends Model
     {
         return $this->belongsTo('App\Section');  
     }
+
+    public function time()
+    {
+        return $this->belongsTo('App\Hours','time_id', 'hour_id');
+    }
+
+    public function day()
+    {
+        return $this->belongsTo('App\Day','day_id', 'day_id');
+    }
 }

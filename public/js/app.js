@@ -183,10 +183,12 @@ $(function() {
             success:function(data){
                 if (data.success) {
                     console.log(data.success);
+                    window.location.reload();
                     $('#student-edit-form-error').prop('style', 'display:none');
-                    $('#student-edit-form-success').html(data.message);
-                    $('#student-edit-form-success').prop('style', 'display:block');
-                    $('#student-edit-form').trigger('reset');
+                    alert(data.message);
+                    // $('#student-edit-form-success').html(data.message);
+                    // $('#student-edit-form-success').prop('style', 'display:block');
+                    // $('#student-edit-form').trigger('reset');
                 }else{
                     console.log(data.errors);
                     var formErrors = '';

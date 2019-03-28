@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Schedule;
 use App\User;
 use App\UserDetails;
 use App\UserGroup;
@@ -13,6 +14,17 @@ use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
+
+    /**
+     * Instantiate a new UserController instance.
+     */
+    public function __construct()
+    {
+        $this->active_year = DB::table('schoolyears')
+                        ->where('is_active', 1)
+                        ->first();
+    }
+
     /**
      * Display a listing of the users.
      *
@@ -173,5 +185,12 @@ class UsersController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function viewSchedule($id)
+    {
+        $user = User::find($id);
+        $schedules = Schedule::where('user_id', $id)->where('school_year_id', $this->active_year->id)->get();
+        return view('backend.users.user-schedule', compact('user', 'schedules'));
     }
 }

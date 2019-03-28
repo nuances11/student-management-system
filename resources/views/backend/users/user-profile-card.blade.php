@@ -1,4 +1,4 @@
-<div class="col-md-6 col-sm-6 col-lg-3 col-12 mb-4">
+<div class="col-md-12 col-sm-12 col-lg-3 col-12 mb-4">
     <div class="card ">
         <div class="card-body">
             <div class="text-center">
@@ -20,6 +20,7 @@
                 <p class="list-item-heading mb-1">{{ ucfirst($user->name) }}</p>
                 <p class="mb-4 text-muted text-small">{{ ucfirst($user->details->group->name) }}</p>
                 <button type="button" data-url="{{ url("/users/{$user->id}/edit") }}" class="btn btn-sm btn-outline-primary ">Edit</button>
+                <button type="button" data-url="{{ url("/users/{$user->id}/schedule") }}" class="btn btn-sm btn-outline-default ">View Schedule</button>
             </div>
         </div>
     </div>

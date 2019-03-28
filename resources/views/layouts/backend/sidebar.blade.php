@@ -14,10 +14,10 @@
                     </a>
                 </li>
                 <li>
-                        <a href="{{ url('/student') }}">
-                            <i class="iconsmind-Business-ManWoman"></i> Students
-                        </a>
-                    </li>
+                    <a href="#students">
+                        <i class="iconsmind-Business-ManWoman"></i> Students
+                    </a>
+                </li>
                 <li>
                     <a href="{{ url('/schedule') }}">
                         <i class="iconsmind-Calendar-4"></i> Schedule
@@ -39,6 +39,19 @@
 
     <div class="sub-menu">
         <div class="scroll">
+
+            <ul class="list-unstyled" data-link="students">
+                <li>
+                    <a href="{{ url('/student') }}">
+                        <i class="simple-icon-people"></i> Master List
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url('/student-class') }}">
+                        <i class="simple-icon-people"></i> Classes
+                    </a>
+                </li>
+            </ul>
 
             <ul class="list-unstyled" data-link="subjects">
                 <li>

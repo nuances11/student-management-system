@@ -167,4 +167,9 @@ class StudentController extends Controller
     {
         //
     }
+
+    public function studentClass()
+    {
+        return view('backend.students.class');
+    }
 }

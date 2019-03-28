@@ -25,6 +25,7 @@ Route::resource('user-groups', 'UserGroupController');
 Route::get('users-groups', 'UserGroupController@index');
 Route::get('users-groups-datatable', 'UserGroupController@usersGroupsDataTable')->name('users.groups.datatables');
 Route::patch('user-image-upload/{id}', 'UsersController@profileImageUpload')->name('user.image.upload');
+Route::get('users/{id}/schedule', 'UsersController@viewSchedule');
 
 /*
  *  Grades Routes
@@ -70,6 +71,7 @@ Route::post('get-available-day', 'ScheduleController@getAvailableDay')->name('ge
  */
 Route::resource('student', 'StudentController'); 
 Route::get('students-datatable', 'StudentController@studentsDataTable')->name('students.datatables');
+Route::get('student-class', 'StudentController@studentClass')->name('student-class');
 
 Auth::routes();
 
