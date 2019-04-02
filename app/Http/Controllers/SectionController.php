@@ -9,6 +9,7 @@ use App\UserGroup;
 use Yajra\Datatables\Datatables;
 use Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 
 class SectionController extends Controller
@@ -128,5 +129,22 @@ class SectionController extends Controller
     public function destroy(Section $section)
     {
         //
+    }
+
+    public function getSections()
+    {
+        $grade = Input::get('grade');
+        $sections = Section::where('grade_id', $grade)->get();
+        $data = [];
+        if ($sections) {
+            foreach ($sections as $section) {
+                $data[] = array(
+                    'id' => $section->id,
+                    'name' => $section->section,
+                );
+            }
+        }
+
+        return response()->json(array('sections' => $data, 'success' => TRUE), 200);
     }
 }

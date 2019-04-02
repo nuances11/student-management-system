@@ -28,23 +28,22 @@
                         <div class="card-body">
                             <h5 class="mb-4">Add Student to Class</h5>
 
-                            <form action="">
+                            <form action="" id="student-add-class-form">
                                 <label class="form-group has-float-label" id="student-class-grade-select">
-                                    <select class="form-control select2-single">
+                                    <select class="form-control select2-single" name="grade">
                                         <option label="&nbsp;">&nbsp;</option>
                                     </select>
                                     <span>Grade</span>
                                 </label>
-                                <label class="form-group has-float-label" id="student-class-section-select">
-                                    <select class="form-control select2-single" disabled>
+                                <label class="form-group has-float-label" id="student-class-section-select" style="display:none">
+                                    <select class="form-control select2-single" name="section">
                                         <option label="&nbsp;">&nbsp;</option>
                                     </select>
                                     <span>Section</span>
                                 </label>
-                                <label class="form-group has-float-label" id="student-class-student-select">
-                                    <select class="form-control select2-single">
+                                <label class="form-group has-float-label" id="student-class-student-select" style="display:none">
+                                    <select class="form-control select2-single" name="student">
                                         <option label="&nbsp;">&nbsp;</option>
-                                        <option label="&nbsp;">Add New</option>
                                     </select>
                                     <span>Student</span>
                                 </label>
@@ -55,7 +54,7 @@
             </div>
             <div class="col-8">
 
-                <table class="table table-bordered" id="students-table">
+                <table class="table table-bordered" id="students-class-table">
                     <thead>
                         <tr>
                             <td>ID</td>

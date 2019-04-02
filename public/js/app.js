@@ -6,6 +6,94 @@ $(function() {
         }
     });
 
+    var gradeOpt = '';
+
+    $.ajax({
+        type:'GET',
+        dataType: 'JSON',
+        url:'get-grades',
+        success:function(data){
+            if (data.success) {
+                gradeOpt = '<option label="&nbsp;">&nbsp;</option>';
+                $.each(data.grades, function (index, value) {
+                    gradeOpt += '<option value="'+value.id+'">'+value.name+'</option>'
+                })
+                $('#student-add-class-form select[name="grade"]').html(gradeOpt);
+            }
+        }
+    });
+
+    $(document).on('change', '#student-class-grade-select', function (e) {
+        var grade = $('#student-add-class-form select[name="grade"]').val();
+
+        var sectionOpt = '';
+
+        $.ajax({
+            type:'GET',
+            data: { grade : grade },
+            dataType: 'JSON',
+            url:'get-sections',
+            success:function(data){
+                if (data.success) {
+                    sectionOpt = '<option label="&nbsp;">&nbsp;</option>';
+                    console.log(data.sections);
+                    $.each(data.sections, function (index, value) {
+                        sectionOpt += '<option value="'+value.id+'">'+value.name+'</option>'
+                    })
+                    $('#student-add-class-form select[name="section"]').html(sectionOpt);
+                    $('#student-class-section-select').prop('style', 'display:block');
+                }
+            }
+        });
+    })
+
+    $(document).on('change', '#student-class-section-select', function (e) {
+        var section = $('#student-add-class-form select[name="section"]').val();
+        var grade = $('#student-add-class-form select[name="grade"]').val();
+
+
+        var studentOpt = '';
+
+        $.ajax({
+            type:'GET',
+            data: { 
+                section : section,
+                grade : grade 
+            },
+            dataType: 'JSON',
+            url:'get-students-per-class',
+            success:function(data){
+                if (data.success) {
+                    studentOpt = '<option label="&nbsp;">&nbsp;</option>';
+                    console.log(data.students);
+                    $.each(data.students, function (index, value) {
+                        studentOpt += '<option value="'+value.id+'">'+value.name+'</option>'
+                    })
+                    $('#student-add-class-form select[name="student"]').html(studentOpt);
+                    $('#student-class-student-select').prop('style', 'display:block');
+                    // var newUrl = 'students-class-datatable?grade=' + grade + '&section=' + section;
+                    // studentClass.ajax.url(newUrl).load();
+                    studentClass.draw();
+                }
+            }
+        });
+    })
+
+    // $.ajax({
+    //     type:'GET',
+    //     dataType: 'JSON',
+    //     url:'get-students',
+    //     success:function(data){
+    //         if (data.success) {
+    //             studOpt = '<option label="&nbsp;">&nbsp;</option>';
+    //             $.each(data.student, function (index, value) {
+    //                 studOpt += '<option value="'+value.id+'">'+value.name+'</option>'
+    //             })
+    //             $('#student-add-class-form select[name="grade"]').html(studOpt);
+    //         }
+    //     }
+    // });
+
     $(document).off('change', '#schedule-user-select').on('change', '#schedule-user-select', function (e) {
         e.preventDefault();
         var subjectOpt = '';
@@ -277,6 +365,47 @@ $(function() {
 
         window.location.href = '/schedule?grade='+grade+'&section='+section;
     })
+
+    $(document).on('click', '.remove-student', function (e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        var r = confirm("Are you sure you want to remove this student?");
+        if (r == true) {
+            $.ajax({
+                type:'POST',
+                data : { id : id },
+                url:'student-class/remove/' + id,
+                success:function(data){
+                    if (data.success) {
+                        alert('Student removed on the class!');
+                        studentClass.draw();
+                    }
+                }
+            });
+        }
+    })
+
+    // var sectionClass = $('#student-add-class-form select[name="section"]').val();
+    // var gradeClass = $('#student-add-class-form select[name="grade"]').val();
+
+    var studentClass = $('#students-class-table').DataTable({
+        processing: true,
+        serverSide: true,
+        //ajax: 'students-class-datatable?grade=' + $('#student-add-class-form select[name="grade"]').val() + '&section=' + $('#student-add-class-form select[name="section"]').val(),
+        ajax: {
+            url: 'students-class-datatable',
+            data: function (d) {
+                d.grade = $('#student-add-class-form select[name="grade"]').val();
+                d.section = $('#student-add-class-form select[name="section"]').val();
+            }
+        },
+        columns: [
+            { data: 'id', name: 'id' },
+            { data: 'lrn', name: 'lrn' },
+            { data: 'name', name: 'name' },
+            { data: 'action', name: 'action' }
+        ]
+    });
 
     $('#students-table').DataTable({
         processing: true,

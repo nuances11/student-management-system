@@ -121,4 +121,20 @@ class GradeController extends Controller
     {
         //
     }
+
+    public function getGrades()
+    {
+        $grades = Grade::all();
+        $data = [];
+        if ($grades) {
+            foreach ($grades as $grade) {
+                $data[] = array(
+                    'id' => $grade->id,
+                    'name' => $grade->name,
+                );
+            }
+        }
+
+        return response()->json(array('grades' => $data, 'success' => TRUE), 200);
+    }
 }

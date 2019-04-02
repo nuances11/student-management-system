@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Student;
+use App\StudentClass;
 use Yajra\Datatables\Datatables;
 use Auth;
 use Illuminate\Support\Facades\DB;
@@ -12,6 +13,16 @@ use Validator;
 
 class StudentController extends Controller
 {
+    /**
+     * Instantiate a new UserController instance.
+     */
+    public function __construct()
+    {
+        $this->active_year = DB::table('schoolyears')
+                        ->where('is_active', 1)
+                        ->first();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -171,5 +182,109 @@ class StudentController extends Controller
     public function studentClass()
     {
         return view('backend.students.class');
+    }
+
+    public function getStudents()
+    {
+        $students = Student::all();
+        $data = [];
+        if ($students) {
+            foreach ($students as $student) {
+                $data[] = array(
+                    'id' => $student->id,
+                    'name' => $student->fname . ' ' . $student->lname,
+                );
+            }
+        }
+
+        return response()->json(array('student' => $data, 'success' => TRUE), 200);
+    }
+
+    /**
+     * Process datatables ajax request for Students Classes DataTable.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function studentsClasses()
+    {
+        $student = Student::query();
+        return Datatables::of($student)
+            ->editColumn('name', function ($student) {
+                $fullname = strtoupper($student->lname) . ', ' . ucfirst($student->fname) . ', ' . ucfirst($student->mname);
+                return $fullname;
+            })
+            ->addColumn('action', function ($student) {
+                return '<a href="'.url("/student/{$student->id}").'" class="btn btn-secondary btn-xs mb-1">Edit</a>';
+            })
+            ->make(true);
+    }
+
+    public function getStudentsPerClass()
+    {
+        $grade = Input::get('grade');
+        $section = Input::get('section');
+        $data = array();
+        $studentClass = StudentClass::where('school_year_id', $this->active_year->id)
+                            ->where('grade_id', $grade)
+                            ->where('section_id', $section)
+                            ->get();
+        if ($studentClass) {
+            foreach ($studentClass as $item) {
+                $data[] = $item->student_id;
+            }
+        }
+
+        $students = DB::table('students')
+                        ->whereNotIn('id', $data)
+                        ->get();
+        $stud = [];
+        if ($students) {
+            foreach ($students as $student) {
+                $stud[] = array(
+                    'id' => $student->id,
+                    'name' => $student->fname . ' ' . $student->lname,
+                );
+            }
+        }
+
+        return response()->json(array('students' => $stud, 'success' => TRUE), 200);
+    }
+
+    public function studentClassDataTable(Request $request)
+    {
+        // $grade = Input::get('grade');
+        // $section = Input::get('section');
+
+        $studentClass = StudentClass::query();
+        // if($grade) $studentClass->where('grade_id', $grade);
+        // if($section) $studentClass->where('section_id', $section);
+        // $studentClass = $studentClass->get();
+
+        // dd($studentClass);
+        
+        return Datatables::of($studentClass)
+            ->filter(function ($query) use ($request) {
+                if ($request->has('grade')) {
+                    $query->where('grade_id', $request->get('grade'));
+                }
+
+                if ($request->has('section')) {
+                    $query->where('section_id', $request->get('section'));
+                }
+            })
+            ->editColumn('id', function ($studentClass) {
+                return $studentClass->student->id;
+            })
+            ->editColumn('lrn', function ($studentClass) {
+                return $studentClass->student->lrn;
+            })
+            ->editColumn('name', function ($studentClass) {
+                $fullname = strtoupper($studentClass->student->lname) . ', ' . ucfirst($studentClass->student->fname) . ', ' . ucfirst($studentClass->student->mname);
+                return $fullname;
+            })
+            ->addColumn('action', function ($studentClass) {
+                return '<a href="'.url("/student/{$studentClass->student->id}").'" class="btn btn-secondary btn-xs mb-1">Edit</a><a data-id="'.$studentClass->id.'" href="javascript:void(0);" class="btn btn-danger btn-xs mb-1 ml-1 remove-student">Remove Student</a>';
+            })
+            ->make(true);
     }
 }
