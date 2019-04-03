@@ -4,7 +4,10 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-
+                @php
+                   print_r(auth()->user()->details) 
+                @endphp
+                
                 <h1>Student Class</h1>
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">

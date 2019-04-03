@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Student;
+use App\User;
 use App\StudentClass;
 use Yajra\Datatables\Datatables;
 use Auth;

@@ -49,18 +49,22 @@
                         <form method="POST" action="{{ route('users.update', $user->id) }}">
                             @method('PATCH')
                             @csrf
-
-                            <label class="form-group has-float-label">
-                                <select class="form-control" name="user_groups_id">
-                                    <option value="">Select</option>
-                                    
-                                    @foreach ($groups as $group)
-                                        <option value="{{ $group->id }}" {{ $user->details->user_groups_id == $group->id ? 'selected' : '' }}>{{ $group->name }}</option>
-                                    @endforeach
-                                    
-                                </select>
-                                <span>User Group</span>
-                            </label>
+                            @if (auth()->user()->details->group->slug == "superadmin" || auth()->user()->details->group->slug == "admin")
+                                <input type="hidden" name="user_groups_id" value="{{ $user->details->user_groups_id }}">
+                            @else
+                                <label class="form-group has-float-label">
+                                    <select class="form-control" name="user_groups_id">
+                                        <option value="">Select</option>
+                                        
+                                        @foreach ($groups as $group)
+                                            <option value="{{ $group->id }}" {{ $user->details->user_groups_id == $group->id ? 'selected' : '' }}>{{ $group->name }}</option>
+                                        @endforeach
+                                        
+                                    </select>
+                                    <span>User Group</span>
+                                </label>
+                            @endif
+                            
 
                             <label class="form-group has-float-label">
                                 <input class="form-control" name="name" value="{{ $user->name }}">
