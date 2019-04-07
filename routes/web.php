@@ -79,6 +79,14 @@ Route::get('get-students-per-class', 'StudentController@getStudentsPerClass')->n
 Route::get('students-class-datatable', 'StudentController@studentClassDataTable')->name('students-class-datatable');
 Route::post('student-class/remove/{id}', 'StudentClassController@destroy');
 
+Route::get('my-class', 'TeacherClassController@index');
+Route::get('user-class-datatable', 'TeacherClassController@userClassDataTable')->name('user-class-datatable');
+Route::get('user-class-subject-datatable', 'TeacherClassController@userSubjectDataTable')->name('user-class-subject-datatable');
+Route::get('user-class-students-datatable', 'TeacherClassController@userStudentsDataTable')->name('user-class-students-datatable');
+Route::get('view-class', 'TeacherClassController@viewClass');
+Route::get('view-students', 'TeacherClassController@viewStudents');
+Route::get('view-grades', 'TeacherClassController@viewGrades');
+
 Auth::routes();
 
 Route::get('/dashboard', 'HomeController@index')->name('home');

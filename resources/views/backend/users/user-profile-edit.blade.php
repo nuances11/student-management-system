@@ -49,8 +49,10 @@
                         <form method="POST" action="{{ route('users.update', $user->id) }}">
                             @method('PATCH')
                             @csrf
-                            @if (auth()->user()->details->group->slug == "superadmin" || auth()->user()->details->group->slug == "admin")
-                                <input type="hidden" name="user_groups_id" value="{{ $user->details->user_groups_id }}">
+                            @if (auth()->user()->id == $user->id)
+                                @if (auth()->user()->details->group->slug == "superadmin" || auth()->user()->details->group->slug == "admin")
+                                    <input type="hidden" name="user_groups_id" value="{{ $user->details->user_groups_id }}">
+                                @endif
                             @else
                                 <label class="form-group has-float-label">
                                     <select class="form-control" name="user_groups_id">

@@ -8,11 +8,17 @@
                         <span>Dashboards</span>
                     </a>
                 </li>
+                @php
+                    $group = auth()->user()->details->group->slug;
+                @endphp
+                @if ($group == 'admin' || $group == 'superadmin')
                 <li>
                     <a href="{{ url('/users') }}"> 
                         <i class="iconsmind-Business-Mens"></i> Users
                     </a>
                 </li>
+                @endif
+                
                 <li>
                     <a href="#students">
                         <i class="iconsmind-Business-ManWoman"></i> Students

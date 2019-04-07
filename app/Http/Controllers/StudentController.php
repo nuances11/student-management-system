@@ -14,7 +14,7 @@ use Validator;
 
 class StudentController extends Controller
 {
-    /**
+    /** 
      * Instantiate a new UserController instance.
      */
     public function __construct()

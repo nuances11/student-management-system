@@ -16,7 +16,10 @@
                 <p class="list-item-heading mb-1">{{ ucfirst($user->name) }}</p>
                 <p class="mb-4 text-muted text-small">{{ ucfirst($user->details->group->name) }}</p>
                 <button type="button" data-url="{{ url("/users/{$user->id}/edit") }}" class="btn btn-sm btn-outline-primary ">Edit</button>
-                @if (auth()->user()->details->group->slug == "superadmin" || auth()->user()->details->group->slug == "admin")
+                @if (auth()->user()->id == $user->id)
+                    
+                {{-- @endif
+                @if (auth()->user()->details->group->slug == "superadmin" || auth()->user()->details->group->slug == "admin") --}}
 
                 @else
                     <button type="button" data-url="{{ url("/users/{$user->id}/schedule") }}" class="btn btn-sm btn-outline-default ">View Schedule</button>

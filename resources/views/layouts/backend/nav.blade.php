@@ -23,113 +23,13 @@
 
     </div>
 
-
-    <a class="navbar-logo" href="{{ url('/dashboard') }}">
+    <a class="navbar-logo" href="{{ url('/dashboard') }}" style="display:none;">
         <span class="logo d-none d-xs-block"></span>
         <span class="logo-mobile d-block d-xs-none"></span>
     </a>
 
     <div class="navbar-right">
         <div class="header-icons d-inline-block align-middle">
-
-            <div class="position-relative d-none d-sm-inline-block">
-                <button class="header-icon btn btn-empty" type="button" id="iconMenuButton" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    <i class="simple-icon-grid"></i>
-                </button>
-                <div class="dropdown-menu dropdown-menu-right mt-3  position-absolute" id="iconMenuDropdown">
-                    <a href="#" class="icon-menu-item">
-                        <i class="iconsmind-Equalizer d-block"></i>
-                        <span>Settings</span>
-                    </a>
-
-                    <a href="#" class="icon-menu-item">
-                        <i class="iconsmind-MaleFemale d-block"></i>
-                        <span>Users</span>
-                    </a>
-
-                    <a href="#" class="icon-menu-item">
-                        <i class="iconsmind-Puzzle d-block"></i>
-                        <span>Components</span>
-                    </a>
-
-                    <a href="#" class="icon-menu-item">
-                        <i class="iconsmind-Bar-Chart d-block"></i>
-                        <span>Profits</span>
-                    </a>
-
-                    <a href="#" class="icon-menu-item">
-                        <i class="iconsmind-File-Chart d-block"></i>
-                        <span>Surveys</span>
-                    </a>
-
-                    <a href="#" class="icon-menu-item">
-                        <i class="iconsmind-Suitcase d-block"></i>
-                        <span>Tasks</span>
-                    </a>
-
-                </div>
-            </div>
-
-            <div class="position-relative d-inline-block">
-                <button class="header-icon btn btn-empty" type="button" id="notificationButton" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    <i class="simple-icon-bell"></i>
-                    <span class="count">3</span>
-                </button>
-                <div class="dropdown-menu dropdown-menu-right mt-3 scroll position-absolute" id="notificationDropdown">
-
-                    <div class="d-flex flex-row mb-3 pb-3 border-bottom">
-                        <a href="#">
-                            <img src="img/profile-pic-l-2.jpg" alt="Notification Image" class="img-thumbnail list-thumbnail xsmall border-0 rounded-circle" />
-                        </a>
-                        <div class="pl-3 pr-2">
-                            <a href="#">
-                                <p class="font-weight-medium mb-1">Joisse Kaycee just sent a new comment!</p>
-                                <p class="text-muted mb-0 text-small">09.04.2018 - 12:45</p>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="d-flex flex-row mb-3 pb-3 border-bottom">
-                        <a href="#">
-                            <img src="img/notification-thumb.jpg" alt="Notification Image" class="img-thumbnail list-thumbnail xsmall border-0 rounded-circle" />
-                        </a>
-                        <div class="pl-3 pr-2">
-                            <a href="#">
-                                <p class="font-weight-medium mb-1">1 item is out of stock!</p>
-                                <p class="text-muted mb-0 text-small">09.04.2018 - 12:45</p>
-                            </a>
-                        </div>
-                    </div>
-
-
-                    <div class="d-flex flex-row mb-3 pb-3 border-bottom">
-                        <a href="#">
-                            <img src="img/notification-thumb-2.jpg" alt="Notification Image" class="img-thumbnail list-thumbnail xsmall border-0 rounded-circle" />
-                        </a>
-                        <div class="pl-3 pr-2">
-                            <a href="#">
-                                <p class="font-weight-medium mb-1">New order received! It is total $147,20.</p>
-                                <p class="text-muted mb-0 text-small">09.04.2018 - 12:45</p>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="d-flex flex-row mb-3 pb-3 ">
-                        <a href="#">
-                            <img src="img/notification-thumb-3.jpg" alt="Notification Image" class="img-thumbnail list-thumbnail xsmall border-0 rounded-circle" />
-                        </a>
-                        <div class="pl-3 pr-2">
-                            <a href="#">
-                                <p class="font-weight-medium mb-1">3 items just added to wish list by a user!</p>
-                                <p class="text-muted mb-0 text-small">09.04.2018 - 12:45</p>
-                            </a>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
 
             <button class="header-icon btn btn-empty d-none d-sm-inline-block" type="button" id="fullScreenButton">
                 <i class="simple-icon-size-fullscreen"></i>
@@ -142,16 +42,31 @@
             <button class="btn btn-empty p-0" type="button" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
                 <span class="name">{{ Auth::user()->name }}</span>
+
+                @php
+                    $image = '';
+                    if (auth()->user()->details->image) {
+                        $image = 'img/users/' . $user->details->image;
+                    }else{
+                        $image = 'img/placeholder/user-placeholder.jpg';
+                    }
+                @endphp
+
                 <span>
-                    <img alt="Profile Picture" src="img/profile-pic-l.jpg" />
+                    <img alt="Profile Picture" src="{{ url($image) }}" />
                 </span>
             </button>
 
             <div class="dropdown-menu dropdown-menu-right mt-3">
                 <a class="dropdown-item" href="{{ url('users/' . auth()->user()->id) }}">Account</a>
-                <a class="dropdown-item" href="#">Features</a>
-                <a class="dropdown-item" href="#">History</a>
-                <a class="dropdown-item" href="#">Support</a>
+                @php
+                    $group = auth()->user()->details->group->slug;
+                @endphp
+                @if ($group == 'teacher')
+                    <a  class="dropdown-item"  href="{{ url('/my-class') }}"> 
+                        My Class
+                    </a>
+                @endif
                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">Sign out</a>
                 <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf

@@ -419,6 +419,38 @@ $(function() {
         ]
     });
 
+    $('#user-class-subject-table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: 'user-class-subject-datatable?data=' + $('#user-class-subject-table').data('param'),
+        columns: [
+            { data: 'subject', name: 'subject' },
+            { data: 'action', name: 'action' }
+        ]
+    });
+
+    $('#user-class-students-table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: 'user-class-students-datatable?data=' + $('#user-class-students-table').data('param'),
+        columns: [
+            { data: 'lrn', name: 'lrn' },
+            { data: 'name', name: 'name' },
+            { data: 'action', name: 'action' }
+        ]
+    });
+
+    $('#user-class-table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: 'user-class-datatable',
+        columns: [
+            { data: 'grade', name: 'grade' },
+            { data: 'section', name: 'section' },
+            { data: 'action', name: 'action' }
+        ]
+    });
+
     $('#users-table').DataTable({
         processing: true,
         serverSide: true,
