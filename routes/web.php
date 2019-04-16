@@ -78,6 +78,7 @@ Route::get('get-sections', 'SectionController@getSections')->name('get-sections'
 Route::get('get-students-per-class', 'StudentController@getStudentsPerClass')->name('get-students-per-class');
 Route::get('students-class-datatable', 'StudentController@studentClassDataTable')->name('students-class-datatable');
 Route::post('student-class/remove/{id}', 'StudentClassController@destroy');
+Route::get('student/records/{id}', 'StudentController@showRecords');
 
 Route::get('my-class', 'TeacherClassController@index');
 Route::get('user-class-datatable', 'TeacherClassController@userClassDataTable')->name('user-class-datatable');
@@ -86,9 +87,11 @@ Route::get('user-class-students-datatable', 'TeacherClassController@userStudents
 Route::get('view-class', 'TeacherClassController@viewClass');
 Route::get('view-students', 'TeacherClassController@viewStudents');
 Route::get('view-grades', 'TeacherClassController@viewGrades');
+Route::resource('student-grades', 'StudentGradeController'); 
 
 Auth::routes();
 
 Route::get('/dashboard', 'HomeController@index')->name('home');
 
+Route::get('generate-pdf','HomeController@generatePDF');
 Route::get('/testroute', 'HomeController@test')->name('test');

@@ -4,7 +4,11 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-
+                @php
+                    $grade_param = Request::has('grade');
+                    $section_param = Request::has('section');
+                @endphp
+                <a href="{{ url("schedule?grade={$grade_param}&section={$section_param}") }}" class="d-block mb-3 back-link"> <span class="glyph-icon iconsmind-Arrow-OutLeft"></span> Back to list</a>
                 <h1>Schedule</h1>
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">
@@ -19,9 +23,6 @@
                         </li>
                     </ol>
                 </nav>
-                <div class="float-right">
-                    <button type="button" data-url="{{ url('/schedule') }}" class="btn btn-success mb-1">Back</button>
-                </div>
                 <div class="separator mb-5"></div>
 
             </div>

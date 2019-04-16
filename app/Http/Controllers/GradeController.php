@@ -13,6 +13,17 @@ use Illuminate\Http\Request;
 
 class GradeController extends Controller
 {
+    /** 
+     * Instantiate a new UserController instance.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->active_year = DB::table('schoolyears')
+                        ->where('is_active', 1)
+                        ->first();
+    }
+    
     /**
      * Display a listing of the resource.
      *

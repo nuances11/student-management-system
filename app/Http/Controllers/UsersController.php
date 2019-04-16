@@ -20,6 +20,7 @@ class UsersController extends Controller
      */
     public function __construct()
     {
+        $this->middleware('auth');
         $this->active_year = DB::table('schoolyears')
                         ->where('is_active', 1)
                         ->first();

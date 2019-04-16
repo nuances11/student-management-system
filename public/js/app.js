@@ -1,4 +1,46 @@
+function calculateFinalRating()
+{
+    var total = 0,
+    valid_periods = 0,
+    final_rating;
+
+    $('.grade_per_period').each(function () {
+        var val = parseInt($(this).val(), 10);
+        if (val !== 0) {
+            valid_periods += 1;
+            total += val;
+        }
+    });
+    console.log('Total : ' + total);
+    console.log('Periods : ' + valid_periods);
+
+    final_rating = total / valid_periods;
+    //$('.average').val(average);
+    //var firstPeriod = $('#first_period').val();
+    // var firstPeriod = ($('#first_period').val()) ? $('#first_period').val() : 0 ;
+    // var secondPeriod = $('#second_period').val();
+    // var secondPeriod = ($('#second_period').val()) ? $('#second_period').val() : 0 ;
+    // var thirdPeriod = $('#third_period').val();
+    // var thirdPeriod = ($('#third_period').val()) ? $('#third_period').val() : 0 ;
+    // // var fourthPeriod = $('#fourth_period').val();
+    // var fourthPeriod = ($('#fourth_period').val()) ? $('#fourth_period').val() : 0 ;
+    // var final_rating = '';
+
+    // final_rating = (firstPeriod + secondPeriod + thirdPeriod + fourthPeriod) / 4;
+    // console.log('First Period : ' + firstPeriod);
+    // console.log('Second Period : ' + secondPeriod);
+    // console.log('Third Period : ' + thirdPeriod);
+    // console.log('Fourth Period : ' + fourthPeriod);
+    // console.log('Final Rating : ' + final_rating);
+    return final_rating;
+}
+
 $(function() {
+    //$('#final_rating').val('0');
+    $('#student-grades-form input').on('blur', function(e) {
+        var final_rating = calculateFinalRating();
+        $('#final_rating').val(final_rating);
+    })
 
     $.ajaxSetup({
         headers: {

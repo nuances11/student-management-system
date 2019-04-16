@@ -1,3 +1,10 @@
+@if (Auth::check())
+
+@else
+<script type="text/javascript">
+    window.location = "{{ url('/login') }}";//here double curly bracket
+</script>
+@endif
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>

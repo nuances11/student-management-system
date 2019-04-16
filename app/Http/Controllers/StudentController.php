@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Student;
 use App\User;
 use App\StudentClass;
+use App\StudentGrade;
 use Yajra\Datatables\Datatables;
 use Auth;
 use Illuminate\Support\Facades\DB;
@@ -19,6 +20,7 @@ class StudentController extends Controller
      */
     public function __construct()
     {
+        $this->middleware('auth');
         $this->active_year = DB::table('schoolyears')
                         ->where('is_active', 1)
                         ->first();
@@ -48,7 +50,9 @@ class StudentController extends Controller
                 return $fullname;
             })
             ->addColumn('action', function ($student) {
-                return '<a href="'.url("/student/{$student->id}").'" class="btn btn-secondary btn-xs mb-1">Edit</a>';
+                $editBtn = '<a href="'.url("/student/{$student->id}").'" class="btn btn-secondary btn-xs mb-1">Edit</a>';
+                $gradesBtn = '<a href="'.url("/student/records/{$student->id}").'" class="btn btn-primary btn-xs mb-1">View Record</a>';
+                return $editBtn . ' ' . $gradesBtn;
             })
             ->make(true);
     }
@@ -287,5 +291,16 @@ class StudentController extends Controller
                 return '<a href="'.url("/student/{$studentClass->student->id}").'" class="btn btn-secondary btn-xs mb-1">Edit</a><a data-id="'.$studentClass->id.'" href="javascript:void(0);" class="btn btn-danger btn-xs mb-1 ml-1 remove-student">Remove Student</a>';
             })
             ->make(true);
+    }
+
+    public function showRecords($id)
+    {
+        // Get student records by Student ID
+        // $student = DB::table('student_grades')
+        //             ->where('student_id', $id)
+        //             ->groupBy('grade_id')
+        //             ->get();
+        // dd($student); 
+        return view('backend.students.records');
     }
 }

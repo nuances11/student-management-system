@@ -3,10 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\StudentClass;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class StudentClassController extends Controller
 {
+    /** 
+     * Instantiate a new UserController instance.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->active_year = DB::table('schoolyears')
+                        ->where('is_active', 1)
+                        ->first();
+    }
+
     /**
      * Display a listing of the resource.
      *

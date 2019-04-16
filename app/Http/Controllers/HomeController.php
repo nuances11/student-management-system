@@ -5,6 +5,7 @@ use App\Subject;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use PDF;
 
 class HomeController extends Controller
 {
@@ -32,5 +33,18 @@ class HomeController extends Controller
     {
         $grade = Input::get();
         return response()->json(array('grade' => $grade, 'success' => TRUE), 200);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function generatePDF()
+    {
+        $data = ['title' => 'Welcome to HDTuto.com'];
+        $pdf = PDF::loadView('myPDF', $data);
+  
+        return $pdf->download('itsolutionstuff.pdf');
     }
 }

@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-            
+                <a href="{{ route('student.index') }}" class="d-block mb-3 back-link"> <span class="glyph-icon iconsmind-Arrow-OutLeft"></span> Back to list</a>
                 <h1>Student</h1>
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">
@@ -19,9 +19,6 @@
                         </li>
                     </ol>
                 </nav>
-                <div class="float-right">
-                    <button type="button" data-url="{{ url('/student') }}" class="btn btn-success mb-1">Back</button>
-                </div>
                 <div class="separator mb-5"></div>
 
             </div>

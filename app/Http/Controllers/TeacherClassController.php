@@ -8,6 +8,7 @@ use App\Section;
 use App\Student;
 use App\Schedule;
 use App\StudentClass;
+use App\StudentGrade;
 use App\SubjectAssignment;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
@@ -25,6 +26,7 @@ class TeacherClassController extends Controller
      */
     public function __construct()
     {
+        $this->middleware('auth');
         $this->active_year = DB::table('schoolyears')
                         ->where('is_active', 1)
                         ->first();
@@ -197,7 +199,18 @@ class TeacherClassController extends Controller
             }
         }
 
-        return view('backend.users.class.student-grade');
+        $student = Student::where('id', $decrypted['student_id'])->first();
+
+        $subject = Subject::where('id', $decrypted['subject_id'])->first();
+
+        $grade = StudentGrade::where('school_year_id', $this->active_year->id)
+                            ->where('grade_id', $decrypted['grade_id'])
+                            ->where('section_id', $decrypted['section_id'])
+                            ->where('student_id', $decrypted['student_id'])
+                            ->first();
+        
+
+        return view('backend.users.class.student-grade', compact('student', 'grade', 'decrypted', 'subject'));
     }
 
 

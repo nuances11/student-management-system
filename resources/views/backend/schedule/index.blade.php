@@ -8,7 +8,7 @@
                 <h1>Schedule</h1>
                 @if (Request::has('grade') && Request::has('section'))
                     <div class="float-md-right text-zero">
-                        <button type="button" class="btn btn-outline-primary btn-lg mr-1" data-url="{{ url('/schedule/create?grade=' . Request::has('grade') . '&section=' . Request::has('section')) }}">ADD NEW</button>
+                        <button type="button" class="btn btn-outline-primary btn-lg mr-1" data-url="{{ url('/schedule/create?grade=' . Request::has('grade') . '&section=' . Request::has('section')) }}">Add new</button>
                     </div>
                 @endif
             </div>
@@ -35,7 +35,7 @@
                         </label>
                     </div>
                     <div class="form-group col-md-4">
-                        <button class="btn btn-primary" id="schedule-filter-submit" type="submit">Submit form</button>
+                        <button class="btn btn-primary" id="schedule-filter-submit" type="submit">Submit</button>
                     </div>
                 </div>
             </div>
