@@ -91,8 +91,6 @@ class StudentGradeController extends Controller
 
         $details = $request->all();
 
-        //dd($details);
-
         $studentGrade = StudentGrade::updateOrCreate([
             //Add unique field combo to match here
             //For example, perhaps you only want one entry per user:
@@ -101,6 +99,7 @@ class StudentGradeController extends Controller
             'grade_id' => $request->get('grade_id'),
             'section_id' => $request->get('section_id'),
             'student_id' => $request->get('student_id'),
+            'subject_id' => $request->get('subject_id')
         ], $details);
 
         return redirect()->back()->with('success', 'Student grade has been added');

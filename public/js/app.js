@@ -15,27 +15,55 @@ function calculateFinalRating()
     console.log('Periods : ' + valid_periods);
 
     final_rating = total / valid_periods;
-    //$('.average').val(average);
-    //var firstPeriod = $('#first_period').val();
-    // var firstPeriod = ($('#first_period').val()) ? $('#first_period').val() : 0 ;
-    // var secondPeriod = $('#second_period').val();
-    // var secondPeriod = ($('#second_period').val()) ? $('#second_period').val() : 0 ;
-    // var thirdPeriod = $('#third_period').val();
-    // var thirdPeriod = ($('#third_period').val()) ? $('#third_period').val() : 0 ;
-    // // var fourthPeriod = $('#fourth_period').val();
-    // var fourthPeriod = ($('#fourth_period').val()) ? $('#fourth_period').val() : 0 ;
-    // var final_rating = '';
-
-    // final_rating = (firstPeriod + secondPeriod + thirdPeriod + fourthPeriod) / 4;
-    // console.log('First Period : ' + firstPeriod);
-    // console.log('Second Period : ' + secondPeriod);
-    // console.log('Third Period : ' + thirdPeriod);
-    // console.log('Fourth Period : ' + fourthPeriod);
-    // console.log('Final Rating : ' + final_rating);
     return final_rating;
 }
 
 $(function() {
+
+        var scntDiv = $('#siblings_entry');
+        var i = $('#siblings_entry div.single-entry').length + 1;
+        var entry = `<div class="container single-entry">
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <span style="font-size:60%;display:block;"><button id="remove-entry" class="btn btn-xs btn-danger">Remove Entry</button></span>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label class="form-group has-float-label">
+                                    <input class="form-control" id="siblings" name="siblings[]">
+                                    <span>Siblings</span>
+                                </label>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label class="form-group has-float-label">
+                                    <input class="form-control" id="siblings_age" name="siblings_age[]">
+                                    <span>Age</span>
+                                </label>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label class="form-group has-float-label">
+                                    <input class="form-control" id="siblings_details" name="siblings_details[]">
+                                    <span>Other Details</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>`;
+
+    $(document).on('click', '#add_siblings_entry', function(e) {
+        e.preventDefault();
+        scntDiv.append(entry);
+        i++;
+        return false;
+    })
+
+    $(document).on('click', '#remove-entry', function(e) { 
+        e.preventDefault();
+        if( i > 2 ) {
+            $(this).parents('div.single-entry').remove();
+            i--;
+        }
+        return false;
+    });
+
     //$('#final_rating').val('0');
     $('#student-grades-form input').on('blur', function(e) {
         var final_rating = calculateFinalRating();
@@ -119,6 +147,41 @@ $(function() {
                 }
             }
         });
+    })
+
+    $(document).on('submit', '#student-add-class-form', function(e) {
+        e.preventDefault();
+        var data = $(this).serialize();
+        $.ajax({
+            type:'POST',
+            data : data,
+            dataType: 'JSON',
+            url:'student-class/add',
+            success:function(data){
+                if (data.success) {
+                    console.log(data.success);
+                    $('#student-add-class-form-error').prop('style', 'display:none');
+                    $('#student-add-class-form-success').prop('style', 'display:block');
+                    $('#student-add-class-form-success').html(data.message);
+                    $('#student-add-class-form').trigger('reset');
+                    $('#student-add-class-form button[type="submit"]').addClass('disabled');
+                    setTimeout(function(){ 
+                        window.location.reload(); 
+                    }, 2000);
+                    
+                }else{
+                    console.log(data.errors);
+                    var formErrors = '';
+                    $.each(data.errors, function (index, value) {
+                        formErrors += value + '</br>';
+                    })
+
+                    $('#student-add-class-form-error').html(formErrors);
+                    $('#student-add-class-form-error').prop('style', 'display:block');
+                }
+            }
+        });
+        console.log(this);
     })
 
     // $.ajax({
@@ -283,8 +346,12 @@ $(function() {
                 if (data.success) {
                     console.log(data.success);
                     $('#student-add-form-error').prop('style', 'display:none');
+                    $('#student-add-form-success').prop('style', 'display:block');
                     $('#student-add-form-success').html(data.message);
                     $('#student-add-form').trigger('reset');
+                    setTimeout(function(){ 
+                        window.location.reload(); 
+                    }, 2000);
                 }else{
                     console.log(data.errors);
                     var formErrors = '';
@@ -313,12 +380,13 @@ $(function() {
             success:function(data){
                 if (data.success) {
                     console.log(data.success);
-                    window.location.reload();
                     $('#student-edit-form-error').prop('style', 'display:none');
-                    alert(data.message);
-                    // $('#student-edit-form-success').html(data.message);
-                    // $('#student-edit-form-success').prop('style', 'display:block');
-                    // $('#student-edit-form').trigger('reset');
+                    $('#student-edit-form-success').html(data.message);
+                    $('#student-edit-form-success').prop('style', 'display:block');
+                    $('#student-edit-form').trigger('reset');
+                    setTimeout(function(){ 
+                        window.location.reload(); 
+                    }, 2000);
                 }else{
                     console.log(data.errors);
                     var formErrors = '';

@@ -16,6 +16,7 @@ class StudentGrade extends Model
         'student_id',
         'grade_id',
         'section_id',
+        'subject_id',
         'user_id',
         'first_period',
         'second_period',
@@ -27,6 +28,21 @@ class StudentGrade extends Model
     public function grade()
     {
         return $this->belongsTo('App\Grade', 'grade_id');
+    }
+
+    public function section()
+    {
+        return $this->belongsTo('App\Section', 'section_id');  
+    }
+
+    public function subject()
+    {
+        return $this->belongsTo('App\Subject', 'subject_id');  
+    }
+
+    public function school_year()
+    {
+        return $this->belongsTo('App\SchoolYear', 'school_year_id');  
     }
 }
 

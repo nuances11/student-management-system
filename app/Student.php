@@ -33,6 +33,19 @@ class Student extends Model
         'address_municipality',
         'address_province',
         'parent_father',
-        'parent_mother'
+        'parent_father_age',
+        'parent_father_occupation',
+        'parent_mother',
+        'parent_mother_age',
+        'parent_mother_occupation',
+        'siblings',
+        'siblings_age',
+        'siblings_details',
+        'goals',
+        'has_card',
+        'has_bc',
+        'has_others',
+        'status',
+        'is_aeta'
     ];
 }

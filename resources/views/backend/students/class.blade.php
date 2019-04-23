@@ -20,13 +20,13 @@
 
             </div>
         </div>
-
+        <div class="alert alert-danger" id="student-add-class-form-error" style="display:none"></div>
+        <div class="alert alert-success" id="student-add-class-form-success" style="display:none"></div>
         <div class="row">
             <div class="col-4">
                 <div class="card mb-4">
                         <div class="card-body">
                             <h5 class="mb-4">Add Student to Class</h5>
-
                             <form action="" id="student-add-class-form">
                                 <label class="form-group has-float-label" id="student-class-grade-select">
                                     <select class="form-control select2-single" name="grade">

@@ -200,7 +200,17 @@ class ScheduleController extends Controller
      */
     public function create()
     {
-        $users = User::all();
+        $usr = [];
+        $user_groups = UserDetails::where('user_groups_id', 3)->get();
+
+        if ($user_groups) {
+            foreach ($user_groups as $group) {
+                $usr[] = $group->user_id;
+            }
+        }
+        $users = User::whereIn('id', $usr)
+                        ->get();
+
         return view('backend.schedule.schedule-form-add', compact('users'));
     }
 

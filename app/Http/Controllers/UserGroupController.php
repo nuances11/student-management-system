@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\UserGroup;
 use Yajra\Datatables\Datatables;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class UserGroupController extends Controller

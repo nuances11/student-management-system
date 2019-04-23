@@ -24,6 +24,7 @@
                         <i class="iconsmind-Business-ManWoman"></i> Students
                     </a>
                 </li>
+                @if ($group == 'admin' || $group == 'superadmin')
                 <li>
                     <a href="{{ url('/schedule') }}">
                         <i class="iconsmind-Calendar-4"></i> Schedule
@@ -39,6 +40,7 @@
                         <i class="iconsmind-Gears"></i> Settings
                     </a>
                 </li>
+                @endif
             </ul>
         </div>
     </div>
@@ -78,21 +80,21 @@
                         <i class="simple-icon-calendar"></i> School Year <span class="badge badge-pill badge-outline-primary float-right mr-4">{{ $active_year }}</span>
                     </a>
                 </li>
-                <li>
+                {{-- <li>
                     <a href="{{ url('/users-groups') }}">
                         <i class="simple-icon-people"></i> User Groups
                     </a>
-                </li>
+                </li> --}}
                 <li>
                     <a href="{{ url('/sections') }}">
                         <i class="simple-icon-home"></i> Sections
                     </a>
                 </li>
-                <li>
+                {{-- <li>
                     <a href="{{ url('grades') }}">
                         <i class="simple-icon-home"></i> Grade
                     </a>
-                </li>
+                </li> --}}
             </ul>
             <ul class="list-unstyled" data-link="schedule">
                 <li>

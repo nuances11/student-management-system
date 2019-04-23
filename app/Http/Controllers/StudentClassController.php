@@ -47,7 +47,9 @@ class StudentClassController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // $data = array('errors' =>  $validator->errors()->toArray(), 'success' => FALSE);                
+        $data = array('request' =>  $request, 'success' => TRUE);  
+        return response()->json($data);
     }
 
     /**

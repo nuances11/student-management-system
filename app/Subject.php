@@ -29,4 +29,9 @@ class Subject extends Model
     {
         return $this->hasMany('App\Schedule');
     }
+
+    public function subject_grade()
+    {
+        return $this->hasMany('App\SubjectGrade');
+    }
 }

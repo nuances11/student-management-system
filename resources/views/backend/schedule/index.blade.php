@@ -6,9 +6,13 @@
         <div class="col-12">
             <div class="mb-2">
                 <h1>Schedule</h1>
-                @if (Request::has('grade') && Request::has('section'))
+                @if (Request::get('section') && Request::get('grade'))
+                    @php
+                        $grade_param = Request::get('grade');
+                        $section_param = Request::get('section');
+                    @endphp
                     <div class="float-md-right text-zero">
-                        <button type="button" class="btn btn-outline-primary btn-lg mr-1" data-url="{{ url('/schedule/create?grade=' . Request::has('grade') . '&section=' . Request::has('section')) }}">Add new</button>
+                        <button type="button" class="btn btn-outline-primary btn-lg mr-1" data-url="{{ url('/schedule/create?grade=' . $grade_param . '&section=' . $section_param) }}">Add new</button>
                     </div>
                 @endif
             </div>

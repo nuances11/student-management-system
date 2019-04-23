@@ -17,9 +17,11 @@
                         <li class="breadcrumb-item active" aria-current="page">{{ ucfirst($user->name) }}</li>
                     </ol>
                 </nav>
-                <div class="float-right">
-                    <button type="button" data-url="{{ route('users.index') }}" class="btn btn-success mb-1">Back</button>
-                </div>
+                @if (auth()->user()->details->group->slug == "superadmin" || auth()->user()->details->group->slug == "admin")
+                    <div class="float-right">
+                        <button type="button" data-url="{{ route('users.index') }}" class="btn btn-success mb-1">Back</button>
+                    </div>                
+                @endif
                 <div class="separator mb-5"></div>
 
             </div>
@@ -71,6 +73,16 @@
                             <label class="form-group has-float-label">
                                 <input class="form-control" name="name" value="{{ $user->name }}">
                                 <span>Name</span>
+                            </label>
+
+                            <label class="form-group has-float-label">
+                                <input class="form-control" name="course" value="{{ $user->details->course }}">
+                                <span>Course</span>
+                            </label>
+
+                            <label class="form-group has-float-label">
+                                <input class="form-control" name="major" value="{{ $user->details->major }}">
+                                <span>Major</span>
                             </label>
 
                             <label class="form-group has-float-label">

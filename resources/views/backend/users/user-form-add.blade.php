@@ -80,6 +80,16 @@
                             <h3>Other Details</h3>
 
                             <label class="form-group has-float-label">
+                                <input class="form-control" name="course" value="{{ old('course') }}">
+                                <span>Course</span>
+                            </label>
+
+                            <label class="form-group has-float-label">
+                                <input class="form-control" name="major" value="{{ old('major') }}">
+                                <span>Major</span>
+                            </label>
+
+                            <label class="form-group has-float-label">
                                 <input class="form-control" name="address" value="{{ old('address') }}">
                                 <span>Address</span>
                             </label>

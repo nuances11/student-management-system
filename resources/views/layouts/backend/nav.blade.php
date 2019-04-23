@@ -46,7 +46,7 @@
                 @php
                     $image = '';
                     if (auth()->user()->details->image) {
-                        $image = 'img/users/' . $user->details->image;
+                        $image = 'img/users/' . auth()->user()->details->image;
                     }else{
                         $image = 'img/placeholder/user-placeholder.jpg';
                     }

@@ -33,4 +33,9 @@ class Schoolyear extends Model
     {
         return $this->hasMany('App\Schedule');
     }
+
+    public function student_grade()
+    {
+        return $this->hasMany('App\StudentGrade');
+    }
 }

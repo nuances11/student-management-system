@@ -5,8 +5,8 @@
         <div class="row">
             <div class="col-12">
                 @php
-                    $grade_param = Request::has('grade');
-                    $section_param = Request::has('section');
+                    $grade_param = Request::get('grade');
+                    $section_param = Request::get('section');
                 @endphp
                 <a href="{{ url("schedule?grade={$grade_param}&section={$section_param}") }}" class="d-block mb-3 back-link"> <span class="glyph-icon iconsmind-Arrow-OutLeft"></span> Back to list</a>
                 <h1>Schedule</h1>
@@ -48,8 +48,8 @@
                         {{-- <form method="POST" action="{{ route('schedule.store') }}" id="schedule-add-form"> --}}
                         <form method="POST" action="" id="schedule-add-form">
                             @csrf
-                            <input type="hidden" name="grade_id" value="{{ Request::has('grade') }}">
-                            <input type="hidden" name="section_id" value="{{ Request::has('section') }}">
+                            <input type="hidden" name="grade_id" value="{{ $grade_param }}">
+                            <input type="hidden" name="section_id" value="{{ $section_param }}">
                             <label class="form-group has-float-label">
                                 <select class="form-control select2-single" id="schedule-user-select" name="user_id">
                                     <option label="&nbsp;">&nbsp;</option>

@@ -6,6 +6,7 @@ use App\Student;
 use App\User;
 use App\StudentClass;
 use App\StudentGrade;
+use App\Grade;
 use Yajra\Datatables\Datatables;
 use Auth;
 use Illuminate\Support\Facades\DB;
@@ -104,6 +105,17 @@ class StudentController extends Controller
         // $student = $request->all();
         // $student->save();
 
+        $details = $request->all();
+        $siblings = serialize($request->input('siblings'));
+        $siblings_age = serialize($request->input('siblings_age'));
+        $siblings_details = serialize($request->input('siblings_details'));
+
+        $request->merge([
+            'siblings' => $siblings,
+            'siblings_age' => $siblings_age,
+            'siblings_details' => $siblings_details,
+        ]);
+
         Student::create($request->all());
 
         return response()->json(array('message' => 'Student Saved', 'success' => TRUE), 200);
@@ -166,9 +178,38 @@ class StudentController extends Controller
 
         }
 
+        // $details = $request->all();
         $details = $request->all();
+        $siblings = serialize($request->input('siblings'));
+        $siblings_age = serialize($request->input('siblings_age'));
+        $siblings_details = serialize($request->input('siblings_details'));
+        $has_card = '';
+        $has_bc = '';
+        $has_others = '';
 
-        $student->fill($details)->save();
+        if ($request->input('has_card')) {
+            $has_card = $request->input('has_card');
+        }
+
+        if ($request->input('has_bc')) {
+            $has_bc = $request->input('has_bc');
+        }
+
+        if ($request->input('has_others')) {
+            $has_others = $request->input('has_others');
+        }
+
+        $request->merge([
+            'siblings' => $siblings,
+            'siblings_age' => $siblings_age,
+            'siblings_details' => $siblings_details,
+            'has_card' => $has_card,
+            'has_bc' => $has_bc,
+            'has_others' => $has_others,
+        ]);
+
+
+        $student->fill($request->all())->save();
 
         return response()->json(array('message' => 'Student Updated', 'success' => TRUE), 200);
     }
@@ -182,6 +223,34 @@ class StudentController extends Controller
     public function destroy(Student $student)
     {
         //
+    }
+
+    public function addStudentClass(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'grade' => 'integer|required',
+            'section' => 'integer|required',
+            'student' => 'integer|required',
+        ]);
+
+        if ($validator->fails())
+        {
+
+            $data = array('errors' =>  $validator->errors()->toArray(), 'success' => FALSE);                
+            return response()->json($data);
+
+        }
+
+
+        $student_class = new StudentClass([
+            'school_year_id' => $this->active_year->id,
+            'student_id'=> $request->get('student'),
+            'grade_id'=> $request->get('grade'),
+            'section_id'=> $request->get('section'),
+        ]);
+        $student_class->save();
+
+        return response()->json(array('message' => 'Student Added', 'success' => TRUE), 200);
     }
 
     public function studentClass()
@@ -295,12 +364,26 @@ class StudentController extends Controller
 
     public function showRecords($id)
     {
-        // Get student records by Student ID
-        // $student = DB::table('student_grades')
-        //             ->where('student_id', $id)
-        //             ->groupBy('grade_id')
-        //             ->get();
-        // dd($student); 
-        return view('backend.students.records');
+        $student = Student::find($id);
+        $grade_one = StudentGrade::where('student_id', $id)
+                            ->where('grade_id', 1)
+                            ->get();  
+        $grade_two = StudentGrade::where('student_id', $id)
+                            ->where('grade_id', 2)
+                            ->get();    
+        $grade_three = StudentGrade::where('student_id', $id)
+                            ->where('grade_id', 3)
+                            ->get(); 
+        $grade_four = StudentGrade::where('student_id', $id)
+                            ->where('grade_id', 4)
+                            ->get();          
+        $grade_five = StudentGrade::where('student_id', $id)
+                            ->where('grade_id', 5)
+                            ->get();    
+        $grade_six = StudentGrade::where('student_id', $id)
+                            ->where('grade_id', 6)
+                            ->get();  
+        $grades = Grade::all();
+        return view('backend.students.records', compact('grade_one', 'grade_two', 'grade_three', 'grade_four', 'grade_five', 'grade_six', 'grades', 'student'));
     }
 }

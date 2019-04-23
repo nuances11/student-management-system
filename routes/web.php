@@ -72,11 +72,13 @@ Route::post('get-available-day', 'ScheduleController@getAvailableDay')->name('ge
 Route::resource('student', 'StudentController'); 
 Route::get('students-datatable', 'StudentController@studentsDataTable')->name('students.datatables');
 Route::get('student-class', 'StudentController@studentClass')->name('student-class');
+Route::post('student-class/add', 'StudentController@addStudentClass')->name('student-class.add');
 Route::get('get-students', 'StudentController@getStudents')->name('get-students');
 Route::get('get-grades', 'GradeController@getGrades')->name('get-grades');
 Route::get('get-sections', 'SectionController@getSections')->name('get-sections');
 Route::get('get-students-per-class', 'StudentController@getStudentsPerClass')->name('get-students-per-class');
 Route::get('students-class-datatable', 'StudentController@studentClassDataTable')->name('students-class-datatable');
+//Route::resource('student-class', 'StudentClassController');
 Route::post('student-class/remove/{id}', 'StudentClassController@destroy');
 Route::get('student/records/{id}', 'StudentController@showRecords');
 

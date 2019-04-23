@@ -18,7 +18,7 @@ class UserDetails extends Model
      *
      * @var array
      */
-    protected $fillable = ['user_id', 'user_groups_id', 'gender', 'address', 'dob', 'image'];
+    protected $fillable = ['user_id', 'user_groups_id', 'gender', 'address', 'dob', 'image', 'course', 'major'];
 
     /**
      * The model's default values for attributes.

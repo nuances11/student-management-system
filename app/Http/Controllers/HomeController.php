@@ -5,6 +5,9 @@ use App\Subject;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use App\Student;
+use App\StudentGrade;
+use App\Grade;
 use PDF;
 
 class HomeController extends Controller
@@ -40,11 +43,31 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function generatePDF()
+    public function generatePDF($id = 1)
     {
-        $data = ['title' => 'Welcome to HDTuto.com'];
-        $pdf = PDF::loadView('myPDF', $data);
+        $student = Student::find($id);
+        $grade_one = StudentGrade::where('student_id', $id)
+                            ->where('grade_id', 1)
+                            ->get();  
+        $grade_two = StudentGrade::where('student_id', $id)
+                            ->where('grade_id', 2)
+                            ->get();    
+        $grade_three = StudentGrade::where('student_id', $id)
+                            ->where('grade_id', 3)
+                            ->get(); 
+        $grade_four = StudentGrade::where('student_id', $id)
+                            ->where('grade_id', 4)
+                            ->get();          
+        $grade_five = StudentGrade::where('student_id', $id)
+                            ->where('grade_id', 5)
+                            ->get();    
+        $grade_six = StudentGrade::where('student_id', $id)
+                            ->where('grade_id', 6)
+                            ->get();  
+        $grades = Grade::all();
+
+        $pdf = PDF::loadView('backend.students.records', compact('grade_one', 'grade_two', 'grade_three', 'grade_four', 'grade_five', 'grade_six', 'grades', 'student'));
   
-        return $pdf->download('itsolutionstuff.pdf');
+        return $pdf->download($student->lrn . '-' . strtotime(time()) . '.pdf');
     }
 }

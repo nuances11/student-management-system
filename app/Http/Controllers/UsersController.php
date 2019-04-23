@@ -119,6 +119,8 @@ class UsersController extends Controller
             'gender' => $request->get('gender'),
             'address'=> $request->get('address'),
             'dob'=> $request->get('dob'),
+            'course' => $request->get('course'),
+            'major' => $request->get('major'),
             'image' => ''
         ]);
 
