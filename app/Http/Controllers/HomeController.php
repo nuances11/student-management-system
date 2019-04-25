@@ -67,6 +67,7 @@ class HomeController extends Controller
         $grades = Grade::all();
 
         $pdf = PDF::loadView('backend.students.records', compact('grade_one', 'grade_two', 'grade_three', 'grade_four', 'grade_five', 'grade_six', 'grades', 'student'));
+        //$pdf = PDF::loadView('backend.students.records');
   
         return $pdf->download($student->lrn . '-' . strtotime(time()) . '.pdf');
     }

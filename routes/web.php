@@ -81,6 +81,7 @@ Route::get('students-class-datatable', 'StudentController@studentClassDataTable'
 //Route::resource('student-class', 'StudentClassController');
 Route::post('student-class/remove/{id}', 'StudentClassController@destroy');
 Route::get('student/records/{id}', 'StudentController@showRecords');
+Route::get('student/records/print/{id}', 'StudentController@printRecords');
 
 Route::get('my-class', 'TeacherClassController@index');
 Route::get('user-class-datatable', 'TeacherClassController@userClassDataTable')->name('user-class-datatable');
