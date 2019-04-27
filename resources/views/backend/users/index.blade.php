@@ -28,7 +28,6 @@
                 <table class="table table-bordered" id="users-table">
                     <thead>
                         <tr>
-                            <td>ID</td>
                             <td>Name</td>
                             <td>Email</td>
                             <td>Action</td>

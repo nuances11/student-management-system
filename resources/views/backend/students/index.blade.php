@@ -28,7 +28,6 @@
                 <table class="table table-bordered" id="students-table">
                     <thead>
                         <tr>
-                            <td>ID</td>
                             <td>LRN</td>
                             <td>Name</td>
                             <td>Action</td>

@@ -44,10 +44,15 @@ class StudentController extends Controller
      */
     public function studentsDataTable()
     {
-        $student = Student::query();
+        $student = Student::select(DB::raw(
+            "lrn,
+            id,
+            CONCAT(lname, ', ', fname) as name"
+        ))->get();
         return Datatables::of($student)
             ->editColumn('name', function ($student) {
-                $fullname = strtoupper($student->lname) . ', ' . ucfirst($student->fname) . ', ' . ucfirst($student->mname);
+                //$fullname = strtoupper($student->lname) . ', ' . ucfirst($student->fname) . ', ' . ucfirst($student->mname);
+                $fullname = $student->name;
                 return $fullname;
             })
             ->addColumn('action', function ($student) {
@@ -346,10 +351,7 @@ class StudentController extends Controller
                     $query->where('section_id', $request->get('section'));
                 }
             })
-            ->editColumn('id', function ($studentClass) {
-                return $studentClass->student->id;
-            })
-            ->editColumn('lrn', function ($studentClass) {
+            ->addColumn('lrn', function ($studentClass) {
                 return $studentClass->student->lrn;
             })
             ->editColumn('name', function ($studentClass) {

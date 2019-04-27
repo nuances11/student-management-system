@@ -1,6 +1,11 @@
 @extends('layouts.backend.app')
 
 @section('content')
+<style>
+    #students-class-table_wrapper .dataTables_filter{
+        display: none;
+    }
+</style>
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">                
@@ -56,7 +61,6 @@
                 <table class="table table-bordered" id="students-class-table">
                     <thead>
                         <tr>
-                            <td>ID</td>
                             <td>LRN</td>
                             <td>Name</td>
                             <td>Action</td>

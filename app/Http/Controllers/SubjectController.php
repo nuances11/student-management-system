@@ -44,7 +44,7 @@ class SubjectController extends Controller
     {
         $subject = Subject::query();
         return Datatables::of($subject)
-            ->editColumn('grade', function ($subject) {
+            ->editColumn('grade_id', function ($subject) {
                 return optional($subject->grade)->name;
             })
             ->addColumn('action', function ($subject) {

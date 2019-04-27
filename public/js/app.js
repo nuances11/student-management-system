@@ -1,3 +1,26 @@
+if ($().fullCalendar) {
+    var testEvent = new Date(new Date().setHours(new Date().getHours()));
+    var day = testEvent.getDate();
+    var month = testEvent.getMonth() + 1;
+    $(".calendar").fullCalendar({
+      themeSystem: "bootstrap4",
+      height: "auto",
+      buttonText: {
+        today: "Today",
+        month: "Month", 
+        week: "Week",
+        day: "Day",
+        list: "List"
+      },
+      bootstrapFontAwesome: {
+        prev: " simple-icon-arrow-left",
+        next: " simple-icon-arrow-right",
+        prevYear: "simple-icon-control-start",
+        nextYear: "simple-icon-control-end"
+      },
+    });
+  }
+
 function calculateFinalRating()
 {
     var total = 0,
@@ -510,7 +533,6 @@ $(function() {
             }
         },
         columns: [
-            { data: 'id', name: 'id' },
             { data: 'lrn', name: 'lrn' },
             { data: 'name', name: 'name' },
             { data: 'action', name: 'action' }
@@ -522,7 +544,6 @@ $(function() {
         serverSide: true,
         ajax: 'students-datatable',
         columns: [
-            { data: 'id', name: 'id' },
             { data: 'lrn', name: 'lrn' },
             { data: 'name', name: 'name' },
             { data: 'action', name: 'action' }
@@ -566,7 +587,6 @@ $(function() {
         serverSide: true,
         ajax: 'users-datatable',
         columns: [
-            { data: 'id', name: 'id' },
             { data: 'name', name: 'name' },
             { data: 'email', name: 'email' },
             { data: 'action', name: 'action' }
@@ -580,7 +600,7 @@ $(function() {
         columns: [
             { data: 'id', name: 'id' },
             { data: 'name', name: 'name' },
-            { data: 'grade', name: 'grade' },
+            { data: 'grade_id', name: 'grade_id' },
             { data: 'action', name: 'action' }
         ]
     });
